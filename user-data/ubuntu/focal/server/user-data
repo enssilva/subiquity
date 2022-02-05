@@ -26,6 +26,6 @@ autoinstall:
   late-commands:
     - curtin in-target --target=/target -- apt install python3-pip -y
     - curtin in-target --target=/target -- pip3 install ansible
-    - # curtin in-target --target=/target -- pip3 install paramiko
+    # - curtin in-target --target=/target -- pip3 install paramiko
     - curtin in-target --target=/target -- git clone git@github.com:enssilva/ubuntu-initial-config.git /tmp/ubuntu-initial-config
     - curtin in-target --target=/target -- ansible-playbook /tmp/ubuntu-initial-config/main.yml
