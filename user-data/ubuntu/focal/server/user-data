@@ -10,7 +10,7 @@ autoinstall:
       name: direct
   ssh:
     install-server: true
-    allow-pw: true
+    allow-pw: false
   user-data:
     package_upgrade: true
     timezone: America/Sao_Paulo
