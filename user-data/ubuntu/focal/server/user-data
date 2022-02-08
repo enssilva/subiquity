@@ -7,7 +7,7 @@ autoinstall:
     variant: br
   storage:
     layout:
-      name: lvm
+      name: direct
   ssh:
     install-server: true
     allow-pw: true
