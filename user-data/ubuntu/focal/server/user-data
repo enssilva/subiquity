@@ -6,8 +6,80 @@ autoinstall:
     layout: us
     variant: br
   storage:
-    layout:
-      name: direct
+    # layout:
+    #   name: direct
+    # grub:
+    #   reorder_uefi: False
+    # swap:
+    #   size: 0
+    config:
+      - ptable: gpt
+        path: /dev/sda
+        wipe: superblock
+        preserve: false
+        name: ''
+        grub_device: true
+        type: disk
+        id: disk-sda
+      - device: disk-sda
+        size: 1048576
+        flag: bios_grub
+        number: 1
+        preserve: false
+        grub_device: false
+        type: partition
+        id: partition-0
+      - device: disk-sda
+        size: 1073741824
+        wipe: superblock
+        flag: ''
+        number: 2
+        preserve: false
+        grub_device: false
+        type: partition
+        id: partition-1
+      - fstype: ext4
+        volume: partition-1
+        preserve: false
+        type: format
+        id: format-0
+      - device: disk-sda
+        size: -1
+        wipe: superblock
+        flag: ''
+        number: 3
+        preserve: false
+        grub_device: false
+        type: partition
+        id: partition-2
+      - name: ubuntu-vg
+        devices:
+        - partition-2
+        preserve: false
+        type: lvm_volgroup
+        id: lvm_volgroup-0
+      - name: ubuntu-lv
+        volgroup: lvm_volgroup-0
+        size: -1
+        wipe: superblock
+        preserve: false
+        type: lvm_partition
+        id: lvm_partition-0
+      - fstype: ext4
+        volume: lvm_partition-0
+        preserve: false
+        type: format
+        id: format-2
+      - path: /
+        device: format-2
+        type: mount
+        id: mount-2
+      - path: /boot
+        device: format-0
+        type: mount
+        id: mount-0
+  packages:
+    - python3-pip
   ssh:
     install-server: true
     allow-pw: false
@@ -25,6 +97,5 @@ autoinstall:
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDKnLWMGIYoOF+pcCUVX+AqQCvMsEm1UIckj4s0neEhilqUgJbogtecQKgUmiywHYDqfu3htb+72JpS/bV6H7BFwde7sKc6HtW05iAhxVyAHYkFAGVF783KWf1sS6oQ3IAbCT7S0wHJvawhuZUACGeX8hqqpQ8TQfZUAOq93sfqeBYK+QeMjU/ampr2gY/DFc/M1ngwUugrEo1Y3zgcVyJOgdyMpwmElC0Q3AbMJymu9j+vw3fmbj5z0Rifx8QHiNJ4J0UBa5VTMlbcxxO/OcoIQ+ug8aKcPzz+kF+eTIahXvNe8l96vVBX8fvzT9gnk5AXtuXX52Y+dZzJbGJWeZ5bC0DNBsPiFDkv+V/p8C2AC6ntSLDPKaC7Vcn9ZFPGoP9ydnlhz2FZcdUt/iSD8sDKgEFmSmMg6fEck+gVrG7rCMp7WHSinfc8cw00nFXDiVIapKHmSeU63gXlvOEtaQMNRxsiKfMrj7VifL26pn2+OFGIhKQ2VV9ekdcbeRzwRjE= admin@fake-router 
   late-commands:
     - curtin in-target --target=/target -- git clone https://github.com/enssilva/ubuntu-initial-config.git /target/tmp/ubuntu-initial-config
-    - curtin in-target --target=/target -- apt install python3-pip -y
     - curtin in-target --target=/target -- pip3 install ansible
     - curtin in-target --target=/target -- ansible-playbook /target/tmp/ubuntu-initial-config/main.yml
