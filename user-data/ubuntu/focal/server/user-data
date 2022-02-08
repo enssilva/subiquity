@@ -6,65 +6,65 @@ autoinstall:
     layout: us
     variant: br
   storage:
-    # layout:
-    #   name: direct
+    layout:
+      name: direct
     # grub:
     #   reorder_uefi: False
     # swap:
     #   size: 0
-    config:
-      - ptable: gpt
-        path: /dev/sda
-        wipe: superblock
-        preserve: false
-        name: ''
-        grub_device: true
-        type: disk
-        id: disk-sda
-      - device: disk-sda
-        size: 1048576
-        flag: bios_grub
-        number: 1
-        preserve: false
-        grub_device: false
-        type: partition
-        id: partition-1
-      - device: disk-sda
-        size: 1073741824
-        wipe: superblock
-        flag: ''
-        number: 2
-        preserve: false
-        grub_device: false
-        type: partition
-        id: partition-2
-      - fstype: ext4
-        volume: partition-2
-        preserve: false
-        type: format
-        id: format-2
-      - device: disk-sda
-        size: -1
-        wipe: superblock
-        flag: ''
-        number: 3
-        preserve: false
-        grub_device: false
-        type: partition
-        id: partition-3
-      - fstype: ext4
-        volume: partition-3
-        preserve: false
-        type: format
-        id: format-3
-      - path: /boot
-        device: format-2
-        type: mount
-        id: mount-2
-      - path: /
-        device: format-3
-        type: mount
-        id: mount-3
+    # config:
+    #   - ptable: gpt
+    #     path: /dev/sda
+    #     wipe: superblock
+    #     preserve: false
+    #     name: ''
+    #     grub_device: true
+    #     type: disk
+    #     id: disk-sda
+    #   - device: disk-sda
+    #     size: 1048576
+    #     flag: bios_grub
+    #     number: 1
+    #     preserve: false
+    #     grub_device: false
+    #     type: partition
+    #     id: partition-1
+    #   - device: disk-sda
+    #     size: 1073741824
+    #     wipe: superblock
+    #     flag: ''
+    #     number: 2
+    #     preserve: false
+    #     grub_device: false
+    #     type: partition
+    #     id: partition-2
+    #   - fstype: ext4
+    #     volume: partition-2
+    #     preserve: false
+    #     type: format
+    #     id: format-2
+    #   - device: disk-sda
+    #     size: -1
+    #     wipe: superblock
+    #     flag: ''
+    #     number: 3
+    #     preserve: false
+    #     grub_device: false
+    #     type: partition
+    #     id: partition-3
+    #   - fstype: ext4
+    #     volume: partition-3
+    #     preserve: false
+    #     type: format
+    #     id: format-3
+    #   - path: /boot
+    #     device: format-2
+    #     type: mount
+    #     id: mount-2
+    #   - path: /
+    #     device: format-3
+    #     type: mount
+    #     id: mount-3
   packages:
     - python3-pip
   ssh:
