@@ -81,7 +81,7 @@ autoinstall:
         sudo: ALL=(ALL) NOPASSWD:ALL
         shell: /bin/bash
         ssh_authorized_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDKnLWMGIYoOF+pcCUVX+AqQCvMsEm1UIckj4s0neEhilqUgJbogtecQKgUmiywHYDqfu3htb+72JpS/bV6H7BFwde7sKc6HtW05iAhxVyAHYkFAGVF783KWf1sS6oQ3IAbCT7S0wHJvawhuZUACGeX8hqqpQ8TQfZUAOq93sfqeBYK+QeMjU/ampr2gY/DFc/M1ngwUugrEo1Y3zgcVyJOgdyMpwmElC0Q3AbMJymu9j+vw3fmbj5z0Rifx8QHiNJ4J0UBa5VTMlbcxxO/OcoIQ+ug8aKcPzz+kF+eTIahXvNe8l96vVBX8fvzT9gnk5AXtuXX52Y+dZzJbGJWeZ5bC0DNBsPiFDkv+V/p8C2AC6ntSLDPKaC7Vcn9ZFPGoP9ydnlhz2FZcdUt/iSD8sDKgEFmSmMg6fEck+gVrG7rCMp7WHSinfc8cw00nFXDiVIapKHmSeU63gXlvOEtaQMNRxsiKfMrj7VifL26pn2+OFGIhKQ2VV9ekdcbeRzwRjE= admin@fake-router 
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGjM2+ypXRik8IyI6deUxCvB4r3GOfle4Q4OkPvXzg8W packer@packer
   late-commands:
     - curtin in-target --target=/target -- git clone https://github.com/enssilva/ubuntu-initial-config.git /tmp/ubuntu-initial-config
     - curtin in-target --target=/target -- pip3 install ansible
