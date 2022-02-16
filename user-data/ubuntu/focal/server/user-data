@@ -82,6 +82,10 @@ autoinstall:
         shell: /bin/bash
         ssh_authorized_keys:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGjM2+ypXRik8IyI6deUxCvB4r3GOfle4Q4OkPvXzg8W packer@packer
+  network:
+    network:
+      version: 2
+      renderer: NetworkManager
   late-commands:
     - curtin in-target --target=/target -- git clone https://github.com/enssilva/ubuntu-initial-config.git /tmp/ubuntu-initial-config
     - curtin in-target --target=/target -- pip3 install ansible
