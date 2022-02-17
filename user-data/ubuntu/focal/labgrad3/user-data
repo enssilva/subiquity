@@ -1,0 +1,89 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: pt_BR
+  keyboard:
+    layout: us
+    variant: br
+  storage:
+    layout:
+      name: direct
+    # grub:
+    #   reorder_uefi: False
+    # swap:
+    #   size: 0
+    # config:
+    #   - ptable: gpt
+    #     path: /dev/sda
+    #     wipe: superblock
+    #     preserve: false
+    #     name: ''
+    #     grub_device: true
+    #     type: disk
+    #     id: disk-sda
+    #   - device: disk-sda
+    #     size: 1048576
+    #     flag: bios_grub
+    #     number: 1
+    #     preserve: false
+    #     grub_device: false
+    #     type: partition
+    #     id: partition-1
+    #   - device: disk-sda
+    #     size: 1073741824
+    #     wipe: superblock
+    #     flag: ''
+    #     number: 2
+    #     preserve: false
+    #     grub_device: false
+    #     type: partition
+    #     id: partition-2
+    #   - fstype: ext4
+    #     volume: partition-2
+    #     preserve: false
+    #     type: format
+    #     id: format-2
+    #   - device: disk-sda
+    #     size: -1
+    #     wipe: superblock
+    #     flag: ''
+    #     number: 3
+    #     preserve: false
+    #     grub_device: false
+    #     type: partition
+    #     id: partition-3
+    #   - fstype: ext4
+    #     volume: partition-3
+    #     preserve: false
+    #     type: format
+    #     id: format-3
+    #   - path: /boot
+    #     device: format-2
+    #     type: mount
+    #     id: mount-2
+    #   - path: /
+    #     device: format-3
+    #     type: mount
+    #     id: mount-3
+  packages:
+    - python3-pip
+  ssh:
+    install-server: true
+    allow-pw: false
+  user-data:
+    package_upgrade: true
+    timezone: America/Sao_Paulo
+    hostname: labgrad
+    users:
+      - name: admin
+        groups: [adm, cdrom, dip, plugdev, lxd, sudo]
+        lock-passwd: false
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        shell: /bin/bash
+        ssh_authorized_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGjM2+ypXRik8IyI6deUxCvB4r3GOfle4Q4OkPvXzg8W packer@packer
+  late-commands:
+    - curtin in-target --target=/target -- git clone https://github.com/enssilva/ubuntu-initial-config.git /tmp/ubuntu-initial-config
+    - curtin in-target --target=/target -- pip3 install ansible
+    - curtin in-target --target=/target -- pip3 install psutil
+    - curtin in-target --target=/target -- ansible-playbook /tmp/ubuntu-initial-config/main.yml --extra-vars nfs_server=192.168.203.51

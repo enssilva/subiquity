@@ -86,4 +86,4 @@ autoinstall:
     - curtin in-target --target=/target -- git clone https://github.com/enssilva/ubuntu-initial-config.git /tmp/ubuntu-initial-config
     - curtin in-target --target=/target -- pip3 install ansible
     - curtin in-target --target=/target -- pip3 install psutil
-    - curtin in-target --target=/target -- ansible-playbook /tmp/ubuntu-initial-config/main.yml
+    - curtin in-target --target=/target -- ansible-playbook /tmp/ubuntu-initial-config/main.yml --extra-vars nfs_server=192.168.201.51
