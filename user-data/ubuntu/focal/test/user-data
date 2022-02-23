@@ -67,6 +67,15 @@ autoinstall:
     #     id: mount-3
   packages:
     - python3-pip
+  snaps:
+    - name: code
+      classic: true
+    - name: blender
+      classic: true
+    - name: netbeans
+      classic: true
+    - name: atom
+      classic: true
   ssh:
     install-server: true
     allow-pw: false
